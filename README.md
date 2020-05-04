@@ -1,5 +1,6 @@
 # calculator
 Simple project for interview
+![Simple calculator](calculator.png)
 
 ## Instalation
 ### Server
