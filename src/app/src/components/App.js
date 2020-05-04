@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from "react";
+import { useApolloClient } from "@apollo/react-hooks";
 
-import Header from './Header/Header';
-import Button from './Button/Button';
+import Header from "./Header/Header";
+import Button from "./Button/Button";
 
 import {
   GlobalStyle,
@@ -13,24 +14,27 @@ import {
   ResultButton,
 } from "./styles";
 
+import * as Mutations from "../mutations";
+
+const SIGN_MAPPING = {
+  "+": "add",
+  "-": "subtract",
+  "*": "multiply",
+  "/": "divide",
+};
 
 function App() {
   const [result, setResult] = useState("0");
   const [chosenSign, setChosenSign] = useState(null);
   const [chosenNumbers, setChosenNumbers] = useState(["", ""]);
-  // const [add, { data }] = useMutation(ADD_MUTATION);
-
+  const client = useApolloClient();
 
   const signs = ["+", "-", "*", "/"];
   const numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3];
-  const commaExist = useMemo(() => !/(?:^|[+\-*/])[1-9]+$/.test(result), [
+  const commaExist = useMemo(() => !/(?:^|[+\-*/])[0-9]+$/.test(result), [
     result,
   ]);
   const lastIsSign = useMemo(() => /[.+\-*/]$/.test(result), [result]);
-
-  function onResult() {
-    console.log(chosenSign, chosenNumbers);
-  }
 
   function onSignClick(event) {
     const s = event.target.textContent;
@@ -70,11 +74,26 @@ function App() {
     setChosenNumbers(["", ""]);
   }
 
+  function onResult() {
+    runMutation(SIGN_MAPPING[chosenSign]);
+  }
+
+  async function runMutation(mutation) {
+    const { data } = await client.mutate({
+      mutation: Mutations[mutation],
+      variables: { a: chosenNumbers[0], b: chosenNumbers[1] },
+    });
+
+    setResult(data[mutation]);
+    setChosenNumbers([data[mutation], ""]);
+    setChosenSign(null);
+  }
+
   return (
     <>
       <GlobalStyle />
       <Wrapper>
-        <Header/>
+        <Header />
         <Field value={result} />
 
         {signs.map((item, id) => (
