@@ -1,7 +1,6 @@
-
 import styled, { createGlobalStyle } from "styled-components";
 
-import imgLogo from "./logo.svg";
+import Button from './Button/Button';
 
 export const GlobalStyle = createGlobalStyle`
   html {
@@ -31,25 +30,6 @@ export const Wrapper = styled.div`
   box-shadow: 5px 9px 16px rgba(0, 0, 0, 0.19);
 `;
 
-export const Header = styled.div`
-  font-family: monospace;
-  text-transform: uppercase;
-  font-size: 1.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  grid-column: span 4;
-  padding: 0.5rem 0;
-`;
-
-export const Logo = styled.img.attrs({
-  src: imgLogo,
-  alt: "Bravelab",
-})`
-  max-width: 4rem;
-  margin-right: 1rem;
-`;
-
 export const Field = styled.input.attrs({
   readOnly: true,
 })`
@@ -60,32 +40,6 @@ export const Field = styled.input.attrs({
   padding: 1rem 0;
   border: 0;
   outline: 0;
-`;
-
-export const Button = styled.button`
-  color: #ff5500;
-  background: #f5f5f5;
-  border: 0;
-  text-align: center;
-  font-size: 1rem;
-  padding: 1em;
-  min-width: 3.5em;
-  border-radius: 0.5rem;
-  outline: 0;
-  cursor: pointer;
-  transition: box-shadow 0.3s ease;
-  &:hover {
-    box-shadow: 0 0 0 1px #d0d0d0 inset;
-  }
-
-  &:active {
-    background: #f0f0f0;
-  }
-
-  &:disabled {
-    cursor: default;
-    opacity: 0.5;
-  }
 `;
 
 export const ZeroButton = styled(Button)`

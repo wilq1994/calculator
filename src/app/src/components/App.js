@@ -1,22 +1,25 @@
 import React, { useState, useMemo } from "react";
 
+import Header from './Header/Header';
+import Button from './Button/Button';
+
 import {
   GlobalStyle,
   Wrapper,
-  Header,
-  Logo,
   Field,
-  Button,
   ZeroButton,
   CommaButton,
   ResetButton,
   ResultButton,
 } from "./styles";
 
+
 function App() {
   const [result, setResult] = useState("0");
   const [chosenSign, setChosenSign] = useState(null);
   const [chosenNumbers, setChosenNumbers] = useState(["", ""]);
+  // const [add, { data }] = useMutation(ADD_MUTATION);
+
 
   const signs = ["+", "-", "*", "/"];
   const numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3];
@@ -71,11 +74,7 @@ function App() {
     <>
       <GlobalStyle />
       <Wrapper>
-        <Header>
-          Calculator
-          <Logo />
-        </Header>
-
+        <Header/>
         <Field value={result} />
 
         {signs.map((item, id) => (
